@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Profil Utilisateur - GECOTEXI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="recyclage, vêtements, profil utilisateur, seconde main, mode durable">
+    <meta name="description" content="Gérez votre profil et vos articles sur GECOTEXI.">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-header img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .profile-header div {
+            flex-grow: 1;
+        }
+
+        .profile-header h2 {
+            margin: 0;
+        }
+
+        .profile-header p {
+            margin: 5px 0;
+        }
+
+        .profile-actions {
+            text-align: right;
+        }
+
+        .profile-info, .profile-articles {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        .profile-actions button {
+            margin-right: 10px;
+        }
+
+        .profile-form, .article-form {
+            display: none;
+        }
+
+        .article-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Navbar Start -->
+        <div class="container-fluid nav-bar bg-transparent">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                    <div>
+                        <img class="img-fluid" src="img/MicrosoftTeams-image (8).png" alt="Icon" style="width: 70px; height: 70px;">
+                    </div>
+                    <h1 class="m-0 text-primary">GECOTEXI</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="accueil.html" class="nav-item nav-link">Accueil</a>
+                        <a href="contact1.html" class="nav-item nav-link">Contact</a>
+                        <a href="logout.html" class="nav-item nav-link text-danger" id="logout-btn" style="display:none;">Déconnectez-vous</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar End -->
+
+        <!-- Profile Start -->
+        <div class="container py-5">
+            <div class="profile-header">
+                <img src="img/profile-placeholder.png" alt="Photo de profil" id="profile-img">
+                <div>
+                    <h2 id="user-name">Utilisateur Inconnu</h2>
+                    <p>Email: <span id="user-email">inconnu@example.com</span></p>
+                    <p>Téléphone: <span id="user-phone">Inconnu</span></p>
+                    <p>Adresse: <span id="user-address">Inconnue</span></p>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="btn btn-primary" id="edit-profile-btn" style="display:none;">Modifier le profil</button>
+                <button class="btn btn-secondary" id="change-password-btn" style="display:none;">Changer le mot de passe</button>
+            </div>
+
+            <div class="profile-info" id="profile-info">
+                <h2>Informations Personnelles</h2>
+                <form id="profile-form">
+                    <div class="mb-3">
+                        <label for="profile-name" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="profile-name" value="" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="profile-email" value="" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile-phone" class="form-label">Téléphone</label>
+                        <input type="text" class="form-control" id="profile-phone" value="" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile-address" class="form-label">Adresse</label>
+                        <input type="text" class="form-control" id="profile-address" value="" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
+                </form>
+            </div>
+
+            <div class="profile-articles" id="profile-articles" style="display:none;">
+                <h2>Mes Articles</h2>
+                <div class="row" id="articles-container">
+                    <!-- Les articles de l'utilisateur seront ajoutés ici -->
+                </div>
+                <button class="btn btn-primary" id="add-article-btn">Ajouter un article</button>
+            </div>
+        </div>
+        <!-- Profile End -->
+
+        <!-- Add Article Form Start -->
+        <div id="articleForm" class="container" style="display:none;">
+            <h2>Ajouter un Article</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="articleTitle" class="form-label">Titre de l'article</label>
+                    <input type="text" class="form-control" id="articleTitle" required>
+                </div>
+                <div class="mb-3">
+                    <label for="articleContent" class="form-label">Contenu de l'article</label>
+                    <textarea class="form-control" id="articleContent" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="articleImage" class="form-label">Image de l'article</label>
+                    <input type="file" class="form-control" id="articleImage" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+        </div>
+        <!-- Add Article Form End -->
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Contactez-nous</h5>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Rue, Abidjan, Côte d'Ivoire</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+225 01 23 45 67 89</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@gecotexi.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Liens Rapides</h5>
+                        <a class="btn btn-link text-white-50" href="#">À Propos</a>
+                        <a class="btn btn-link text-white-50" href="#">Contactez-nous</a>
+                        <a class="btn btn-link text-white-50" href="#">Nos Services</a>
+                        <a class="btn btn-link text-white-50" href="#">Politique de Confidentialité</a>
+                        <a class="btn btn-link text-white-50" href="#">Conditions Générales</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Photo Galerie</h5>
+                        <div class="row g-2 pt-2">
+                            <div class="col-4">
+                                <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/chile-clothes-pile.jpg" alt="Galerie 1">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/Wheel.png" alt="Galerie 2">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/image (1).jpg" alt="Galerie 3">
+                            </div>
+                            <!-- Add more gallery images as needed -->
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Newsletter</h5>
+                        <p>Inscrivez-vous pour recevoir les dernières nouvelles et mises à jour.</p>
+                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Votre email">
+                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Inscription</button>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">GECOTEXI</a>, Tous droits réservés.
+                            Conçu par <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="#">Accueil</a>
+                                <a href="#">Cookies</a>
+                                <a href="#">Aide</a>
+                                <a href="#">FAQ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Custom Javascript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var spinner = document.getElementById('spinner');
+            setTimeout(function() {
+                spinner.classList.remove('show');
+            }, 1000);
+
+            // Supposons que les informations de l'utilisateur sont récupérées lors de l'authentification
+            const user = {
+                name: "Utilisateur Inconnu",
+                email: "inconnu@example.com",
+                phone: "Inconnu",
+                address: "Inconnue",
+                profileImg: "img/profile-placeholder.png",
+                isAuthenticated: false // Supposons que l'utilisateur est inconnu par défaut
+            };
+
+            // Si l'utilisateur est authentifié, nous remplaçons les informations
+            if (user.isAuthenticated) {
+                user.name = "Ewa Christelle ZOBIEU";
+                user.email = "christellezobieu@gmail.com";
+                user.phone = "07 45 13 34 85";
+                user.address = "93160, Noisy-le-Grand (93), FR";
+                user.profileImg = "img/profile-placeholder.png";
+            }
+
+            // Afficher les informations de l'utilisateur
+            document.getElementById('user-name').textContent = user.name;
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-phone').textContent = user.phone;
+            document.getElementById('user-address').textContent = user.address;
+            document.getElementById('profile-img').src = user.profileImg;
+
+            if (user.isAuthenticated) {
+                document.getElementById('edit-profile-btn').style.display = 'inline-block';
+                document.getElementById('change-password-btn').style.display = 'inline-block';
+                document.getElementById('logout-btn').style.display = 'inline-block';
+                document.getElementById('profile-articles').style.display = 'block';
+            }
+
+            document.getElementById('edit-profile-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Afficher le formulaire de modification de profil
+                document.getElementById('profile-form').style.display = 'block';
+                document.getElementById('profile-name').value = user.name;
+                document.getElementById('profile-email').value = user.email;
+                document.getElementById('profile-phone').value = user.phone;
+                document.getElementById('profile-address').value = user.address;
+            });
+
+            document.getElementById('change-password-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Rediriger vers la page de changement de mot de passe
+                window.location.href = 'change-password.html';
+            });
+
+            document.getElementById('add-article-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Afficher le formulaire d'ajout d'article
+                document.getElementById('articleForm').style.display = 'block';
+            });
+
+            // Exemple de soumission du formulaire de profil
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                user.name = document.getElementById('profile-name').value;
+                user.email = document.getElementById('profile-email').value;
+                user.phone = document.getElementById('profile-phone').value;
+                user.address = document.getElementById('profile-address').value;
+
+                alert('Profil mis à jour!');
+                document.getElementById('profile-form').style.display = 'none';
+
+                // Mise à jour des informations affichées
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-email').textContent = user.email;
+                document.getElementById('user-phone').textContent = user.phone;
+                document.getElementById('user-address').textContent = user.address;
+            });
+
+            // Exemple de soumission du formulaire d'ajout d'article
+            document.getElementById('articleForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Article ajouté!');
+                document.getElementById('articleForm').style.display = 'none';
+            });
+
+            // Gestion de l'upload de la photo de profil
+            document.getElementById('upload-photo').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profile-img').src = e.target.result;
+                        user.profileImg = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

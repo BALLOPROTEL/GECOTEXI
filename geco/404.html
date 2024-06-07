@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Recyclage de vêtements</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Recyclage, vêtements, environnement" name="keywords">
+    <meta content="Site de recyclage de vêtements pour un avenir durable." name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Navbar Start -->
+        <div class="container-fluid nav-bar bg-transparent">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                    <div>
+                        <img class="img-fluid" src="img/MicrosoftTeams-image (8).png" alt="Icon" style="inline-size: 70px; block-size: 70px;">
+                    </div>
+                    <h1 class="m-0 text-primary">GECOTEXI</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="index.html" class="nav-item nav-link">Accueil</a>
+                        <a href="about.html" class="nav-item nav-link">Connexion</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Galerie</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="property-list.html" class="dropdown-item active">Vente de vêtements</a>
+                                <a href="property-type.html" class="dropdown-item">Brique et décoration</a>
+                                <a href="property-agent.html" class="dropdown-item">Méthode mécanique</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Prendre rendez-vous</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="testimonial.html" class="dropdown-item">Dépôt de vêtements dans les points de collecte</a>
+                                <a href="404.html" class="dropdown-item">Récupération de vêtements à domicile</a>
+                            </div>
+                        </div>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar End -->
+
+        <!-- Form Start -->
+        <div class="form-container my-5">
+            <div class="container">
+                <h1 class="text-center mb-4">Récupération de Vêtements à Domicile</h1>
+                <form id="recoveryForm" class="bg-light p-4 rounded">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nom :</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">Prénom :</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email :</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact :</label>
+                        <input type="tel" class="form-control" id="contact" name="contact" required pattern="[0-9]{10}" placeholder="0102030405">
+                    </div>
+                    <div class="mb-3">
+                        <label for="commune" class="form-label">Commune :</label>
+                        <select id="commune" name="commune" class="form-select" required>
+                            <option value="" disabled selected>Sélectionnez votre commune</option>
+                            <option value="Abobo">Abobo</option>
+                            <option value="Adjamé">Adjamé</option>
+                            <option value="Cocody">Cocody</option>
+                            <option value="Yopougon">Yopougon</option>
+                            <option value="Plateau">Plateau</option>
+                            <option value="Autre">Autre (Veuillez préciser)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="otherCommuneContainer" style="display:none;">
+                        <label for="otherCommune" class="form-label">Précisez la commune :</label>
+                        <input type="text" class="form-control" id="otherCommune" name="otherCommune">
+                    </div>
+                    <div class="mb-3">
+                        <label for="timePassage" class="form-label">Plage horaire souhaité :</label>
+                        <select id="timePassage" name="timePassage" class="form-select" required>
+                            <optgroup label="En matinée">
+                                <option value="9h-10h">9h-10h</option>
+                                <option value="10h-11h">10h-11h</option>
+                                <option value="11h-12h">11h-12h</option>
+                            </optgroup>
+                            <optgroup label="En soirée">
+                                <option value="15h-16h">15h-16h</option>
+                                <option value="16h-17h">16h-17h</option>
+                                <option value="17h-18h">17h-18h</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <button type="button" id="submitBtn" class="btn btn-primary">Soumettre</button>
+                    <div id="message" style="display: none; margin-block-start: 10px;" class="alert"></div>
+                </form>
+            </div>
+        </div>
+        <!-- Form End -->
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Contactez-nous</h5>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Rue, Abidjan, Côte d'Ivoire</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+225 01 23 45 67 89</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@gecotexi.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Liens Rapides</h5>
+                        <a class="btn btn-link text-white-50" href="#">À Propos</a>
+                        <a class="btn btn-link text-white-50" href="#">Contact</a>
+                        <a class="btn btn-link text-white-50" href="#">Nos Services</a>
+                        <a class="btn btn-link text-white-50" href="#">Politique de Confidentialité</a>
+                        <a class="btn btn-link text-white-50" href="#">Termes & Conditions</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Galerie Photo</h5>
+                        <div class="row g-2 pt-2 gallery">
+                            <div class="col-4">
+                                <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/chile-clothes-pile.jpg" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/image (1).jpg" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/78554_680_Centre-de-tri-textiles-Alpes-TLC-mai-2022.jpg" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/fabscrap.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-white mb-4">Newsletter</h5>
+                        <p>Inscrivez-vous pour recevoir les dernières nouvelles et mises à jour.</p>
+                        <div class="position-relative mx-auto" style="max-inline-size: 400px;">
+                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Votre email">
+                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">S'inscrire</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">Votre Nom de Site</a>, Tous Droits Réservés.
+                            Conçu par <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="#">Accueil</a>
+                                <a href="#">Cookies</a>
+                                <a href="#">Aide</a>
+                                <a href="#">FAQ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Custom Script -->
+    <script>
+        document.getElementById('commune').addEventListener('change', function () {
+            var otherCommuneContainer = document.getElementById('otherCommuneContainer');
+            if (this.value === 'Autre') {
+                otherCommuneContainer.style.display = 'block';
+            } else {
+                otherCommuneContainer.style.display = 'none';
+            }
+        });
+
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const form = document.getElementById('recoveryForm');
+            const formData = new FormData(form);
+
+            // Vérifiez si tous les champs sont remplis
+            if (!formData.get('name') || !formData.get('lastname') || !formData.get('email') || 
+                !formData.get('contact') || !formData.get('commune') || !formData.get('timePassage')) {
+                displayMessage('Veuillez renseigner tous les champs SVP.', 'alert-danger');
+                return;
+            }
+
+            fetch('http://localhost:3000/recuperation_vetements', {
+                method: 'POST',
+                body: JSON.stringify({
+                    nom: formData.get('name'),
+                    prenom: formData.get('lastname'),
+                    email: formData.get('email'),
+                    contact: formData.get('contact'),
+                    commune: formData.get('commune'),
+                    autre_commune: formData.get('commune') === 'Autre' ? formData.get('otherCommune') : '',
+                    plage_horaire: formData.get('timePassage')
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message) {
+                    displayMessage('Merci pour les informations, nous reviendrons vers vous.', 'alert-success');
+                    form.reset(); // Réinitialisez les champs du formulaire
+                } else {
+                    displayMessage('Une erreur s\'est produite. Veuillez réessayer.', 'alert-danger');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                displayMessage('Une erreur s\'est produite. Veuillez réessayer.', 'alert-danger');
+            });
+        });
+
+        function displayMessage(message, alertType) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'alert ' + alertType;
+            messageDiv.textContent = message;
+        }
+    </script>
+</body>
+
+</html>

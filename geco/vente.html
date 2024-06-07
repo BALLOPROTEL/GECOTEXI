@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Recyclage de vêtements - GECOTEXI</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Recyclage, friperie, vente de vêtements, seconde main, mode durable" name="keywords">
+    <meta content="Achetez et vendez des vêtements de seconde main pour une mode durable et économique avec GECOTEXTI. Découvrez notre large gamme de vêtements recyclés." name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .gallery-img,
+        .property-item img {
+            inline-size: 100%;
+            block-size: 250px;
+            object-fit: cover;
+        }
+
+        #spinner {
+            inline-size: 3rem;
+            block-size: 3rem;
+        }
+
+        .navbar-brand img {
+            inline-size: 70px;
+            block-size: 70px;
+        }
+
+        .article-img {
+            inline-size: 100px;
+            block-size: 100px;
+            object-fit: cover;
+        }
+
+        .property-price {
+            position: absolute;
+            inset-block-end: 0;
+            inset-inline-start: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+        }
+
+        #add-article-form-container,
+        #payment-method-form-container {
+            display: none;
+            position: fixed;
+            inset-block-start: 50%;
+            inset-inline-start: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        #add-article-form-container.show,
+        #payment-method-form-container.show {
+            display: block;
+        }
+
+        #cart-items {
+            position: fixed;
+            inset-block-start: 20px;
+            inset-inline-end: 20px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-inline-size: 300px;
+        }
+    </style>    
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Chargement...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        <!-- Navbar Start -->
+        <div class="container-fluid nav-bar bg-transparent">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                    <div>
+                        <img class="img-fluid" src="img/MicrosoftTeams-image (8).png" alt="Icon">
+                    </div>
+                    <h1 class="m-0 text-primary">GECOTEXI</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="accueil.html" class="nav-item nav-link">Accueil</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Galerie</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="vente.html" class="dropdown-item active">Vente de vêtements</a>
+                                <a href="brique.html" class="dropdown-item">Brique et décoration</a>
+                                <a href="methode.html" class="dropdown-item">Méthode mécanique</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Prendre rendez-vous</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="depot.html" class="dropdown-item">Dépôt de vêtements dans les points de collecte</a>
+                                <a href="recuperation.html" class="dropdown-item">Récupération de vêtements à domicile</a>
+                            </div>
+                        </div>
+                        <a href="contact1.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <a href="#" id="show-add-article-form" class="btn btn-primary py-md-3 px-md-5 me-3">Ajouter article</a>
+                    <a href="#" id="view-cart" class="btn btn-secondary py-md-3 px-md-5">Voir Panier <span id="cart-count">(0)</span></a>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid header bg-white p-0">
+            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+                <div class="col-md-6 animated fadeIn">
+                    <img class="img-fluid" src="img/mode.jpg" alt="Header Image">
+                </div>
+                <div class="col-md-6 text-center text-md-start" style="margin-block-start: 20px;">
+                    <h1 class="text-primary mb-4">Bienvenue dans la friperie de GECOTEXI</h1>
+                    <p class="mb-4">Découvrez notre collection de vêtements de seconde main soigneusement sélectionnés. Rejoignez-nous dans notre mission de rendre la mode plus durable et accessible à tous.</p>
+                    </div> 
+            
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Property List Start -->
+        <div class="container-xxl py-5">
+            <div class="container-fluid">
+                <div class="row g-0 gx-5 align-items-end">
+                    <div class="col-lg-12">
+                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h1 class="mb-3">Friperie</h1>
+                            <p>Acheter des vêtements de seconde main dans une friperie en ligne est l’un des meilleurs moyens de faire des économies et de gagner de l’argent lors de la revente. Nos vêtements sont soigneusement triés et nettoyés pour vous offrir la meilleure qualité possible.</p>
+                            <p>Chez GECOTEXI, nous proposons une large gamme de vêtements pour hommes, femmes et enfants. Que vous cherchiez des pièces vintage, des marques de créateurs ou simplement des vêtements abordables, vous trouverez votre bonheur dans notre friperie en ligne.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div class="row g-4" id="articles">
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/4362930882437703.jpg" alt="Vente de vêtements"></a>
+                                        <div class="property-price">30€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 5</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/Friperie au Bugue01.jpeg" alt="Friperie"></a>
+                                        <div class="property-price">25€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 3</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/vêtement.JPG" alt="Vêtements d'occasion"></a>
+                                        <div class="property-price">20€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 8</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/mannequin-de-vitrine.jpg" alt="Vêtements d'occasion"></a>
+                                        <div class="property-price">15€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 8</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/textile-pret-a-porter-merchandising.jpg" alt="Vêtements d'occasion"></a>
+                                        <div class="property-price">15€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 8</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/15541499-20590243-subcategoria.jpg" alt="Vêtements d'occasion"></a>
+                                        <div class="property-price">35€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 8</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/15749677-20980607-subcategoria.jpg" alt="Vêtements d'occasion"></a>
+                                        <div class="property-price">15€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 8</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/IMG_0756.JPG" alt="Vêtements d'occasion"></a>
+                                        <div class="property-price">25€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 8</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="#"><img class="img-fluid property-img" src="img/posters-mannequins-in-a-clothing-store.jpg" alt="Vêtements d'occasion"></a>
+                                        <div class="property-price">20€ - Premier choix</div>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                        <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: 8</div>
+                                        <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Les articles ajoutés par les utilisateurs seront ajoutés ici -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Property List End -->
+
+        <!-- Add Article Form Start -->
+        <div id="add-article-form-container">
+            <h2 class="mb-4">Ajouter un article</h2>
+            <form id="add-article-form">
+                <div class="mb-3">
+                    <label for="article-name" class="form-label">Nom de l'article</label>
+                    <input type="text" class="form-control" id="article-name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="article-price" class="form-label">Prix</label>
+                    <input type="number" class="form-control" id="article-price" required>
+                </div>
+                <div class="mb-3">
+                    <label for="article-material" class="form-label">Matière</label>
+                    <input type="text" class="form-control" id="article-material" required>
+                </div>
+                <div class="mb-3">
+                    <label for="article-image" class="form-label">Image</label>
+                    <input type="file" class="form-control" id="article-image" accept="image/*" required>
+                </div>
+                <div class="mb-3">
+                    <label for="article-quantity" class="form-label">Quantité disponible</label>
+                    <input type="number" class="form-control" id="article-quantity" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter l'article</button>
+                <button type="button" id="close-add-article-form" class="btn btn-secondary">Fermer</button>
+            </form>
+        </div>
+        <!-- Add Article Form End -->
+
+        <!-- Payment Methods Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <h2 class="mb-4">Méthodes de paiement</h2>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa fa-credit-card fa-2x text-primary me-3"></i>
+                            <h5 class="mb-0">Carte de crédit</h5>
+                        </div>
+                        <button id="pay-credit-card" class="btn btn-primary">Payer avec Carte de Crédit</button>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fab fa-paypal fa-2x text-primary me-3"></i>
+                            <h5 class="mb-0">PayPal</h5>
+                        </div>
+                        <button id="pay-paypal" class="btn btn-primary">Payer avec PayPal</button>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa fa-mobile-alt fa-2x text-primary me-3"></i>
+                            <h5 class="mb-0">Paiement mobile</h5>
+                        </div>
+                        <button id="pay-mobile" class="btn btn-primary">Payer avec Paiement Mobile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Payment Methods End -->
+
+        <!-- Payment Method Form Start -->
+        <div id="payment-method-form-container">
+            <h2 class="mb-4">Informations de paiement</h2>
+            <form id="payment-method-form">
+                <div id="credit-card-form" class="payment-form">
+                    <div class="mb-3">
+                        <label for="card-number" class="form-label">Numéro de carte</label>
+                        <input type="text" class="form-control" id="card-number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="card-expiry" class="form-label">Date d'expiration</label>
+                        <input type="text" class="form-control" id="card-expiry" placeholder="MM/YY" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="card-cvc" class="form-label">CVC</label>
+                        <input type="text" class="form-control" id="card-cvc" required>
+                    </div>
+                </div>
+                <div id="paypal-form" class="payment-form">
+                    <div class="mb-3">
+                        <label for="paypal-email" class="form-label">Email PayPal</label>
+                        <input type="email" class="form-control" id="paypal-email" required>
+                    </div>
+                </div>
+                <div id="mobile-payment-form" class="payment-form">
+                    <div class="mb-3">
+                        <label for="mobile-number" class="form-label">Numéro de téléphone</label>
+                        <input type="text" class="form-control" id="mobile-number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mobile-provider" class="form-label">Fournisseur</label>
+                        <select class="form-select" id="mobile-provider" required>
+                            <option value="orange-money">Orange Money</option>
+                            <option value="moov-money">Moov Money</option>
+                            <option value="mtn-money">MTN Money</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Payer</button>
+                <button type="button" id="close-payment-method-form" class="btn btn-secondary">Fermer</button>
+            </form>
+        </div>
+        <!-- Payment Method Form End -->
+
+       <!-- Cart Start -->
+        <div id="cart-items">
+            <h4>Panier</h4>
+            <ul id="cart-list"></ul>
+            <button id="checkout" class="btn btn-success">Passer à la caisse</button>
+        </div>
+        <!-- Cart End -->
+
+       <!-- Footer Start -->
+       <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Contactez-nous</h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 COCODY, CÔTE D'IVOIRE, Abidjan</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+22507345851</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Liens rapides</h5>
+                    <a class="btn btn-link text-white-50" href="#">À propos</a>
+                    <a class="btn btn-link text-white-50" href="#">Contactez-nous</a>
+                    <a class="btn btn-link text-white-50" href="#">Nos services</a>
+                    <a class="btn btn-link text-white-50" href="#">Politique de confidentialité</a>
+                    <a class="btn btn-link text-white-50" href="#">Conditions générales</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Photo galerie</h5>
+                    <div class="row g-2 pt-2">
+                        <div class="col-4">
+                            <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/chile-clothes-pile.jpg" alt="Galerie 1">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/Wheel.png" alt="Galerie 2">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid rounded bg-light p-1 gallery-img" src="img/image (1).jpg" alt="Galerie 3">
+                        </div>
+                        <!-- Add more gallery images as needed -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Newsletter</h5>
+                    <p>Inscrivez-vous pour recevoir les dernières nouvelles et mises à jour.</p>
+                    <div class="position-relative mx-auto" style="max-inline-size: 400px;">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Votre email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Inscription</button>
+                    </div>
+                </div>                  
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">GECOTEXI</a>, Tous droits réservés.
+                        Conçu par <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="#">Accueil</a>
+                            <a href="#">Cookies</a>
+                            <a href="#">Aide</a>
+                            <a href="#">FAQ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var spinner = document.getElementById('spinner');
+            setTimeout(function() {
+                spinner.classList.remove('show');
+            }, 1000);
+
+            const showAddArticleFormBtn = document.getElementById('show-add-article-form');
+            const closeAddArticleFormBtn = document.getElementById('close-add-article-form');
+            const addArticleFormContainer = document.getElementById('add-article-form-container');
+            const form = document.getElementById('add-article-form');
+            const articleList = document.getElementById('articles');
+            const cartList = document.getElementById('cart-list');
+            const viewCartBtn = document.getElementById('view-cart');
+            const cartItems = document.getElementById('cart-items');
+            const checkoutBtn = document.getElementById('checkout');
+            const paymentButtons = document.querySelectorAll('#pay-credit-card, #pay-paypal, #pay-mobile');
+            const paymentMethodFormContainer = document.getElementById('payment-method-form-container');
+            const paymentMethodForm = document.getElementById('payment-method-form');
+            const closePaymentMethodFormBtn = document.getElementById('close-payment-method-form');
+            const creditCardForm = document.getElementById('credit-card-form');
+            const paypalForm = document.getElementById('paypal-form');
+            const mobilePaymentForm = document.getElementById('mobile-payment-form');
+            const cartCount = document.getElementById('cart-count');
+
+            const cart = [];
+
+            showAddArticleFormBtn.addEventListener('click', function() {
+                addArticleFormContainer.classList.add('show');
+            });
+
+            closeAddArticleFormBtn.addEventListener('click', function() {
+                addArticleFormContainer.classList.remove('show');
+            });
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById('article-name').value;
+                const price = document.getElementById('article-price').value;
+                const material = document.getElementById('article-material').value;
+                const image = document.getElementById('article-image').files[0];
+                const quantity = document.getElementById('article-quantity').value;
+
+                if (image) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const div = document.createElement('div');
+                        div.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
+                        div.setAttribute('data-wow-delay', '0.1s');
+                        div.innerHTML = `
+                            <div class="property-item rounded overflow-hidden">
+                                <div class="position-relative overflow-hidden">
+                                    <a href="#"><img class="img-fluid property-img" src="${e.target.result}" alt="${name}"></a>
+                                    <div class="property-price">${price}€ - Premier choix</div>
+                                    <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">À vendre</div>
+                                    <div class="position-absolute bottom-0 end-0 m-4 quantity">Disponible: ${quantity}</div>
+                                    <button class="btn btn-success btn-sm add-to-cart" style="position: absolute; inset-block-start: 10px; inset-inline-end: 10px;">Ajouter au Panier</button>
+                                    <button class="btn btn-danger btn-sm remove-btn" style="position: absolute; inset-block-start: 10px; inset-inline-start: 10px;">Supprimer</button>
+                                </div>
+                            </div>
+                        `;
+                        div.querySelector('.add-to-cart').addEventListener('click', function() {
+                            addToCart(name, price, quantity, e.target.result, div);
+                        });
+                        div.querySelector('.remove-btn').addEventListener('click', function() {
+                            div.remove();
+                        });
+                        articleList.appendChild(div);
+                    }
+                    reader.readAsDataURL(image);
+                }
+
+                addArticleFormContainer.classList.remove('show');
+                form.reset();
+            });
+
+            function addToCart(name, price, quantity, image, div) {
+                const cartItem = cart.find(item => item.name === name);
+                if (cartItem) {
+                    if (cartItem.quantity < cartItem.stock) {
+                        cartItem.quantity++;
+                        updateStock(div, cartItem);
+                    } else {
+                        alert('Rupture de stock');
+                        return;
+                    }
+                } else {
+                    const newItem = { name, price, quantity: 1, image, stock: quantity, div };
+                    cart.push(newItem);
+                    updateStock(div, newItem);
+                }
+                renderCart();
+                updateCartCount();
+            }
+
+            function updateStock(div, item) {
+                const quantityElement = div.querySelector('.quantity');
+                quantityElement.textContent = `Disponible: ${item.stock - item.quantity}`;
+                if (item.quantity >= item.stock) {
+                    const addButton = div.querySelector('.add-to-cart');
+                    addButton.disabled = true;
+                    addButton.textContent = 'Rupture de stock';
+                }
+            }
+
+            function renderCart() {
+                cartList.innerHTML = '';
+                cart.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="article-img"> 
+                        ${item.name} - ${item.price}€ - Quantité: ${item.quantity}
+                        <button class="btn btn-danger btn-sm remove-from-cart">Retirer</button>
+                    `;
+                    li.querySelector('.remove-from-cart').addEventListener('click', function() {
+                        removeFromCart(item);
+                    });
+                    cartList.appendChild(li);
+                });
+            }
+
+            function removeFromCart(item) {
+                const cartItem = cart.find(cartItem => cartItem.name === item.name);
+                if (cartItem.quantity > 1) {
+                    cartItem.quantity--;
+                } else {
+                    const index = cart.findIndex(cartItem => cartItem.name === item.name);
+                    cart.splice(index, 1);
+                }
+                updateStock(item.div, cartItem);
+                renderCart();
+                updateCartCount();
+            }
+
+            function updateCartCount() {
+                cartCount.innerText = `(${cart.reduce((total, item) => total + item.quantity, 0)})`;
+            }
+
+            viewCartBtn.addEventListener('click', function() {
+                cartItems.classList.toggle('show');
+            });
+
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Votre panier est vide.');
+                    return;
+                }
+                paymentMethodFormContainer.classList.add('show');
+                cartItems.classList.remove('show');
+            });
+
+            paymentButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    paymentMethodFormContainer.classList.add('show');
+                    creditCardForm.style.display = 'none';
+                    paypalForm.style.display = 'none';
+                    mobilePaymentForm.style.display = 'none';
+
+                    if (this.id === 'pay-credit-card') {
+                        creditCardForm.style.display = 'block';
+                    } else if (this.id === 'pay-paypal') {
+                        paypalForm.style.display = 'block';
+                    } else if (this.id === 'pay-mobile') {
+                        mobilePaymentForm.style.display = 'block';
+                    }
+                });
+            });
+
+            closePaymentMethodFormBtn.addEventListener('click', function() {
+                paymentMethodFormContainer.classList.remove('show');
+            });
+
+            paymentMethodForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                alert('Paiement effectué avec succès !');
+                paymentMethodFormContainer.classList.remove('show');
+                paymentMethodForm.reset();
+                cart.length = 0; // Clear cart
+                renderCart();
+                updateCartCount();
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Recyclage de vêtements - GECOTEXI</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Recyclage, friperie, vente de vêtements, seconde main, mode durable" name="keywords">
+    <meta content="Achetez et vendez des vêtements de seconde main pour une mode durable et économique avec GECOTEXTI. Découvrez notre large gamme de vêtements recyclés." name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .gallery-img,
+        .property-item img {
+            inline-size: 100%;
+            block-size: 250px;
+            object-fit: cover;
+        }
+
+        #spinner {
+            inline-size: 3rem;
+            block-size: 3rem;
+        }
+
+        .navbar-brand img {
+            inline-size: 70px;
+            block-size: 70px;
+        }
+
+        .article-img {
+            inline-size: 100px;
+            block-size: 100px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Chargement...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        <!-- Navbar Start -->
+        <div class="container-fluid nav-bar bg-transparent">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                    <div>
+                        <img class="img-fluid" src="img/MicrosoftTeams-image (8).png" alt="Icon">
+                    </div>
+                    <h1 class="m-0 text-primary">GECOTEXI</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="accueil.html" class="nav-item nav-link">Accueil</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Galerie</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="vente.html" class="dropdown-item active">Vente de vêtements</a>
+                                <a href="brique.html" class="dropdown-item">Brique et décoration</a>
+                                <a href="methode.html" class="dropdown-item">Méthode mécanique</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Prendre rendez-vous</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="depot.html" class="dropdown-item">Dépôt de vêtements dans les points de collecte</a>
+                                <a href="recuperation.html" class="dropdown-item">Récupération de vêtements à domicile</a>
+                            </div>
+                        </div>
+                        <a href="contact1.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar End -->
+
+        <!-- Add Article Form Start -->
+        <div class="container py-5">
+            <h2>Ajouter un article</h2>
+            <form id="add-article-form">
+                <div class="mb-3">
+                    <label for="article-name" class="form-label">Nom de l'article</label>
+                    <input type="text" class="form-control" id="article-name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="article-price" class="form-label">Prix</label>
+                    <input type="number" class="form-control" id="article-price" required>
+                </div>
+                <div class="mb-3">
+                    <label for="article-image" class="form-label">Image de l'article</label>
+                    <input type="file" class="form-control" id="article-image" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+            <div id="article-list" class="mt-5">
+                <h3>Articles ajoutés</h3>
+                <ul id="articles" class="list-group"></ul>
+            </div>
+        </div>
+        <!-- Add Article Form End -->
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Custom Javascript -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('add-article-form');
+                const articleList = document.getElementById('articles');
+
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const name = document.getElementById('article-name').value;
+                    const price = document.getElementById('article-price').value;
+                    const image = document.getElementById('article-image').files[0];
+
+                    if (image) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const li = document.createElement('li');
+                            li.classList.add('list-group-item', 'd-flex', 'align-items-center', 'justify-content-between');
+                            li.innerHTML = `
+                                <div>
+                                    <img src="${e.target.result}" alt="${name}" class="article-img me-3"> 
+                                    <strong>${name}</strong> - ${price}€ 
+                                </div>
+                                <button class="btn btn-danger btn-sm remove-btn">Supprimer</button>
+                            `;
+                            articleList.appendChild(li);
+
+                            // Ajouter un événement pour le bouton de suppression
+                            li.querySelector('.remove-btn').addEventListener('click', function() {
+                                li.remove();
+                            });
+
+                            // Redirection vers la page de vente après l'ajout de l'article
+                            window.location.href = 'vente.html';
+                        }
+                        reader.readAsDataURL(image);
+                    }
+
+                    form.reset();
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
